@@ -4,16 +4,17 @@
 <head>
     <meta charset="utf-8">
     <title>Congrats</title>
-    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="./congrats.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/congrats.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
 </head>
 
 <body style="background-color: lightgoldenrodyellow" ;>
     <center>
-        <button class="button" style="margin:10px; padding:20px; border-color: red background-color 5em: goldenrod"
-            onclick="celebrate();"><span>You made it!😃 Click to congratulate.</span></button>
+        <button class="button" style="margin:10px" style="padding:20px" border-color: red background-color 5em;
+            goldenrod" onclick="doAction()" ;><span>You made it!😃 Click to congratulate.</span></button>;
         <div id="gifid"></div>
+
     </center>
 
 
@@ -21,6 +22,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
+
+        function doAction() {
+            celebrate();
+        }
+
 
         // Function to run when the button is clicked
         function celebrate() {
