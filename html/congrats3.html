@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Favorite Movies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <center>
+        <button style="margin:10px" onclick="celebrate();">You made it!😃 Click to congratulate</button>
+        <div id="gifid"></div>
+    </center>
+
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function randomIntFromInterval(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        var results = [];
+        for (var j = 0; j < results.length; j++) {
+            const randomIndex = randomIntFromInterval(0, videoObjects.length);
+            const vObject = videoObjects[randomIndex];
+            if (!!vObject) {
+                $('#gifid').html("<BR/><center><video width='35%' height='35%' controls autoplay loop><source src='" + vObject.link + "' type='video/mp4'></video></center>");
+                break;
+            }
+        };
+
+        // Function to run when the button is clicked
+        function celebrate() {
+            var queryURL = "https://api.tenor.com/v1/search?q=minions&key=B3RT5ZFYTZ7W";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+                dataType: "json"
+            }).then(function (response) {
+
+                var celeb = response.results[0].media[0].gif.url;
+                //var titleTd = `https://media.tenor.com/images/6c67b0f03b55c4b2be43816717e2e649/tenor.gif`;
+                //var titleTd2 = `https://media1.tenor.com/images/48b90c5c6f1145cb8b9931384732e3d3/tenor.gif?itemid=4384526;`
+                console.log(celeb);
+                //results[0].media[0].gif[0].size;
+                //console.log(Object.getOwnPropertyNames(response.results))
+                //$("#gifid").html(`<video src=${titleTd} style="margin-top:10px"; height = '900' width = '900' />`);
+                $("#gifid").html(`<img src="${celeb}" style="margin-top:10px"; height = '900' width = '900' />`);
+            });
+        };
+
+
+    </script>
+</body>
+
+</html>

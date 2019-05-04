@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Congratulations</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
+    <head>
+
+
+    <body>
+        <center>
+            <button id="btnclick">You made it! Click to congratulate</button>
+        </center>
+        <div id="gifid" style="margin-top:100px;">
+
+        </div>
+
+        <script>
+            function getUrlVars() {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                    vars[key] = value;
+                });
+                return vars;
+            }
+
+            function randomIntFromInterval(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            }
+
+            $('#btnclick').on("click", function (event) {
+                const searchParam = getUrlVars()["search"];
+                $.ajax({
+                    url: "https://api.imgur.com/3/gallery/search/viral/all/5/?q=",
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Client-ID e4bc0885d256ba8'
+                    },
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        const jsonObject = result.data;
+                        var videoObjects = [];
+                        var index = 0;
+                        if (!!jsonObject && jsonObject.length > 0) {
+                            if (jsonObject.length > 500) {
+                                index = 200;
+                            } else {
+                                index = jsonObject.length;
+                            }
+                            for (var i = 0; i < index; i++) {
+                                const imgObj = jsonObject[i];
+                                const imagesObj = !!imgObj.images ? imgObj.images[0] : undefined;
+                                if (!!imagesObj) {
+                                    const imgType = imagesObj.type;
+                                    const hasSound = imagesObj.has_sound;
+                                    if (imgType === 'video/mp4' && hasSound) {
+                                        videoObjects.push(imagesObj);
+                                    }
+                                }
+                            }
+                            for (var j = 0; j < videoObjects.length; j++) {
+                                const randomIndex = randomIntFromInterval(0, videoObjects.length);
+                                const vObject = videoObjects[randomIndex];
+                                if (!!vObject) {
+                                    $('#gifid').html("<BR/><center><video width='35%' height='35%' controls autoplay loop><source src='" + vObject.link + "' type='video/mp4'></video></center>");
+                                    break;
+                                }
+                            }
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        </script>
+    </body>
+
+</html>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
